@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Performance Expert System</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .container { max-width: 500px; }
+        label { display: block; margin-top: 8px; }
+        input, select { padding: 5px; width: 200px; }
+        button { margin-top: 12px; padding: 6px 14px; }
+        #result { margin-top: 15px; padding: 10px; border: 1px solid #ccc; }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Employee Performance Expert System</h2>
+
+        <label>Employee Name</label>
+        <input type="text" id="name">
+
+        <label>Employee ID</label>
+        <input type="text" id="empid">
+
+        <label>Department</label>
+        <select id="department">
+            <option value="Technical">Technical</option>
+            <option value="Sales">Sales</option>
+            <option value="Support">Support</option>
+        </select>
+
+        <label>Years of Experience</label>
+        <input type="number" id="experience">
+
+        <label>Attendance Percentage</label>
+        <input type="number" id="attendance">
+
+        <label>Project Score (0-10)</label>
+        <input type="number" id="projects">
+
+        <label>Communication Score (0-10)</label>
+        <input type="number" id="communication">
+
+        <label>Productivity Score (0-10)</label>
+        <input type="number" id="productivity">
+
+        <label>Teamwork Score (0-10)</label>
+        <input type="number" id="teamwork">
+
+        <label>Punctuality Score (0-10)</label>
+        <input type="number" id="punctuality">
+
+        <button onclick="calculatePerformance()">Evaluate Performance</button>
+
+        <div id="result"></div>
+
+    </div>
+
+    <script>
+
+        function calculatePerformance() {
+
+            let name = document.getElementById("name").value;
+            let empid = document.getElementById("empid").value;
+            let department = document.getElementById("department").value;
+            let experience = parseInt(document.getElementById("experience").value);
+            let attendance = parseInt(document.getElementById("attendance").value);
+            let projects = parseInt(document.getElementById("projects").value);
+            let communication = parseInt(document.getElementById("communication").value);
+            let productivity = parseInt(document.getElementById("productivity").value);
+            let teamwork = parseInt(document.getElementById("teamwork").value);
+            let punctuality = parseInt(document.getElementById("punctuality").value);
+
+            let totalScore = 0;
+
+            // Attendance Rules
+            if(attendance >= 90)
+                totalScore += 15;
+            else if(attendance >= 75)
+                totalScore += 10;
+            else
+                totalScore += 3;
+
+            // Project Rules
+            if(projects >= 8)
+                totalScore += 15;
+            else if(projects >= 5)
+                totalScore += 10;
+            else
+                totalScore += 3;
+
+            // Communication Rules
+            if(communication >= 8)
+                totalScore += 15;
+            else if(communication >= 5)
+                totalScore += 10;
+            else
+                totalScore += 3;
+
+            // Productivity Rules
+            if(productivity >= 8)
+                totalScore += 15;
+            else if(productivity >= 5)
+                totalScore += 10;
+            else
+                totalScore += 3;
+
+            // Teamwork Rules
+            if(teamwork >= 8)
+                totalScore += 15;
+            else if(teamwork >= 5)
+                totalScore += 10;
+            else
+                totalScore += 3;
+
+            // Punctuality Rules
+            if(punctuality >= 8)
+                totalScore += 15;
+            else if(punctuality >= 5)
+                totalScore += 10;
+            else
+                totalScore += 3;
+
+            // Experience Bonus
+            if(experience >= 5)
+                totalScore += 10;
+            else if(experience >= 2)
+                totalScore += 5;
+            else
+                totalScore += 2;
+
+            let performance = "";
+            let recommendation = "";
+            let hike = "";
+
+            // Final Result
+            if(totalScore >= 85) {
+                performance = "OUTSTANDING";
+                recommendation = "Promotion & Bonus";
+                hike = "15% - 20%";
+            }
+            else if(totalScore >= 65) {
+                performance = "GOOD";
+                recommendation = "Appreciated Employee";
+                hike = "8% - 12%";
+            }
+            else if(totalScore >= 40) {
+                performance = "SATISFACTORY";
+                recommendation = "Needs Skill Improvement";
+                hike = "3% - 5%";
+            }
+            else {
+                performance = "POOR";
+                recommendation = "Training Required";
+                hike = "No Hike";
+            }
+
+            // Display Result
+            document.getElementById("result").innerHTML =
+                "<h3>Performance Report</h3>" +
+                "<p><b>Employee Name:</b> " + name + "</p>" +
+                "<p><b>Employee ID:</b> " + empid + "</p>" +
+                "<p><b>Department:</b> " + department + "</p>" +
+                "<p><b>Experience:</b> " + experience + " years</p>" +
+                "<p><b>Total Score:</b> " + totalScore + "/100</p>" +
+                "<p><b>Performance:</b> " + performance + "</p>" +
+                "<p><b>Recommendation:</b> " + recommendation + "</p>" +
+                "<p><b>Salary Hike:</b> " + hike + "</p>";
+        }
+
+    </script>
+
+</body>
+</html>
