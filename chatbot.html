@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Rule Based Chatbot</title>
+    <style>
+        /* Page background */
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            text-align: center;
+        }
+
+        /* Whole chatbot box */
+        #chatContainer {
+            width: 350px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+        }
+
+        /* Top header bar */
+        .chat-header {
+            background: #0B3D91;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        /* Scrollable message area */
+        #chatBox {
+            height: 300px;
+            padding: 10px;
+            overflow-y: auto;
+            background: #fafafa;
+            text-align: left;
+        }
+
+        /* Common style for all messages */
+        .message {
+            padding: 8px 12px;
+            margin: 6px 0;
+            border-radius: 12px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        /* User message — blue, right side */
+        .user {
+            background: #0B3D91;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+        }
+
+        /* Bot message — grey, left side */
+        .bot {
+            background: #e4e6eb;
+            color: black;
+            text-align: left;
+        }
+
+        /* Input row at bottom */
+        .input-area {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        #userInput {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            outline: none;
+        }
+
+        button {
+            padding: 8px 16px;
+            background: #0B3D91;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chatbot</h1>
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            College Help Bot
+        </div>
+
+        <div class="chat-box" id="chatBox">
+            <div class="message bot">
+                Hello! Ask me something.
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type message..."/>
+            <button onclick="sendMsg()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        //STEP-1 -- rules
+        const rules = {
+            "hi"        : "Hello! How can I help you today?",
+            "hello"     : "Hi there! Ask me about the college.",
+            "timing"    : "College timings: 9:00 AM to 5:00 PM, Monday to Saturday.",
+            "library"   : "The library is open from 8 AM to 8 PM on all working days.",
+            "fees"      : "Annual fees are around Rs. 1,20,000. Visit the accounts office for details.",
+            "admission" : "Admissions open in June. You can apply online on our website.",
+            "course"    : "We offer Computer, IT, Mechanical, Civil, and E&TC engineering.",
+            "hostel"    : "Yes, separate hostels are available for boys and girls.",
+            "canteen"   : "The canteen serves breakfast, lunch, and snacks from 8 AM to 6 PM.",
+            "contact"   : "You can reach us at 020-12345678 or info@college.edu",
+            "principal" : "The principal is Dr. R. K. Sharma. Office: Admin block, 2nd floor.",
+            "exam"      : "Semester exams are held in May and November.",
+            "holiday"   : "List of holidays is on the college notice board and website.",
+            "bye"       : "Goodbye! Have a great day!",
+            "thanks"    : "You're welcome!",
+            "thank you" : "You're welcome!"
+        };
+
+        // STEP-2 -- sendMsg() function
+        function sendMsg(){
+            const input = document.getElementById("userInput");
+            const userText = input.value.trim().toLowerCase();
+            if(userText == "") return;
+            showMsg(userText, "user");
+            const reply = getReply(userText);
+            showMsg(reply, "bot");
+            input.value = "";
+        }
+
+        //STEP-3 -- Reply creation
+        function getReply(text){
+            for(let keyword in rules){
+                if(text.includes(keyword)){
+                    return rules[keyword];
+                }
+            }
+            return "Sorry !!";
+        }
+
+        // STEP-4 -- showMsg()
+        function showMsg(text, sender){
+            const chatBox = document.getElementById("chatBox");
+            const msg = document.createElement("div");
+            msg.className = "message " + sender;   // ← IMPORTANT: this line was missing in your version!
+            if(sender == "user"){
+                msg.textContent = "User: " + text;
+            } else {
+                msg.textContent = "Bot: " + text;
+            }
+            chatBox.appendChild(msg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
